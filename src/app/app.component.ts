@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { StudentFormComponent } from './student-form/student-form.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [StudentFormComponent],
+  template: `<app-student-form></app-student-form>`,
 })
-export class AppComponent {
-  title = 'student-detail-form';
-}
+export class AppComponent {}
