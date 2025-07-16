@@ -1,7 +1,7 @@
 using Amazon.DynamoDBv2.DataModel;
 using Microsoft.AspNetCore.Mvc;
 using StudentApi.Models;
-using StudentApi.Services; // ✅ Import your SecretsService
+using StudentApi.Services;
 
 namespace StudentApi.Controllers
 {
@@ -27,7 +27,19 @@ namespace StudentApi.Controllers
             var config = new DynamoDBOperationConfig { OverrideTableName = tableName };
             await _context.SaveAsync(student, config);
 
-           return Ok(new { message = "Saved student successfully" });
+            return Ok("Saved student successfully");
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> GetAllStudents()
+        {
+            var secrets = await _secretsService.GetSecretsAsync("StudentApp/ProdSecrets");
+            var tableName = secrets["DYNAMODB_TABLE_NAME"];
+
+            var config = new DynamoDBOperationConfig { OverrideTableName = tableName };
+            var students = await _context.ScanAsync<Student>([], config).GetRemainingAsync();
+
+            return Ok(students);
         }
     }   
 }
