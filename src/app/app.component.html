@@ -1,0 +1,16 @@
+<div class="toggle-container">
+  <div class="toggle-buttons">
+    <button (click)="showForm = true" [class.active]="showForm">Add Student</button>
+    <button (click)="showForm = false" [class.active]="!showForm">View Students</button>
+  </div>
+
+  <div class="content-container">
+    <div *ngIf="showForm; else viewMode">
+      <app-student-form></app-student-form>
+    </div>
+
+    <ng-template #viewMode>
+      <app-view-students></app-view-students>
+    </ng-template>
+  </div>
+</div>
